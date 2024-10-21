@@ -11,7 +11,7 @@ const Remaining = () => {
 
   const alertType = totalExpenses > budget ? "alert-danger" : "alert-success";
 
-  // Exercise: Create an alert when Remaining is less than 0.
+ 
 
   return (
     <div className={`alert ${alertType}`}>

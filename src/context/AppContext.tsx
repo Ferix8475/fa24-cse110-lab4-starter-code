@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 import { Expense } from "../types/types";
 
 // Exercise: Create add budget to the context
@@ -28,4 +28,12 @@ export const AppProvider = (props: any) => {
       {props.children}
     </AppContext.Provider>
   );
+};
+
+export const useAppContext = () =>{
+  const context = useContext(AppContext);
+  if (context == undefined){
+    throw new Error("AppContext is undefined");
+  }
+  return context;
 };
