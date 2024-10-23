@@ -3,9 +3,7 @@ import { AppContext, useAppContext } from "../../context/AppContext";
 import { Expense } from "../../types/types";
 
 const AddExpenseForm = () => {
-  // Exercise: Consume the AppContext here
   const { expenses, setExpenses } = useAppContext();
-  // Exercise: Create name and cost to state variables
   const [name, setName] = useState("");
   const [cost, setCost] = useState<number>(0);
 
@@ -20,17 +18,30 @@ const AddExpenseForm = () => {
       id: generateId(),
       name: name,
       cost: cost,
-    }
+    };
 
     setExpenses((prev) => [...prev, newExpense]);
 
     setName("");
     setCost(0);
+  };
 
+  const handleCostChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    
+    if (value === "") {
+      setCost(0);
+    } else {
+      const parsedValue = parseInt(value);
+      
+      if (!isNaN(parsedValue)) {
+        setCost(parsedValue);
+      }
+    }
   };
 
   return (
-    <form onSubmit={(event) => onSubmit(event)}>
+    <form onSubmit={onSubmit}>
       <div className="row">
         <div className="col-sm">
           <label htmlFor="name">Name</label>
@@ -41,23 +52,22 @@ const AddExpenseForm = () => {
             id="name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-          ></input>
+          />
         </div>
         <div className="col-sm">
           <label htmlFor="cost">Cost</label>
           <input
             required
-            type="text"
+            type="number"
             className="form-control"
             id="cost"
-            value={cost}
-            onChange={(e) => setCost(parseInt(e.target.value))}
-
-          ></input>
+            value={cost.toString()}
+            onChange={handleCostChange}
+          />
         </div>
         <div className="col-sm">
           <button type="submit" className="btn btn-primary mt-3">
-            Save
+            Add
           </button>
         </div>
       </div>

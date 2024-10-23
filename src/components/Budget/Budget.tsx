@@ -25,6 +25,7 @@ const Budget = () => {
           type="number"
           value={newBudget}
           onChange={(e) => setNewBudget(parseInt(e.target.value))}
+          placeholder="Enter New Budget"
         />
         <button onClick={handleSaveBudget} >
           Save
