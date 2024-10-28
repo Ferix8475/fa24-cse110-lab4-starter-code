@@ -16,7 +16,7 @@ const createExpense = (name: string, cost: number) => {
   let updatedNameCount = screen.getAllByText(name).length;
   let updatedCostCount = screen.getAllByText(`$${cost}`).length;
 
-  expect(updatedNameCount).toBe(0);
+  expect(updatedNameCount).toBe(-1);
   expect(updatedCostCount).toBe(initialCostCount + 1);
 
 };
