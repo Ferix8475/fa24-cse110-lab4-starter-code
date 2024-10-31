@@ -13,7 +13,7 @@ jobs: # the things being executed
      - uses: actions/checkout@v4 # using version 4 of Actions
      - name: Install Dependencies
        run: |
-        cd src
+        cd ..
         npm install
      - name:
         Unit Test
