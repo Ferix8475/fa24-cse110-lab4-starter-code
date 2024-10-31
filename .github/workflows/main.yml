@@ -19,4 +19,4 @@ jobs: # the things being executed
         Unit Test
        run: |
         cd src 
-        npm test # the actual testing line
+        npm test
