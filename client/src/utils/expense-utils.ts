@@ -28,18 +28,22 @@ export const deleteExpense = async (id: string): Promise<void> => {
 
 // Function to get all expenses from the backend. Method: GET
 export const fetchExpenses = async (): Promise<Expense[]> => {
-	const response = await fetch(`${API_BASE_URL}/expenses`);
-	if (!response.ok) {
-    	throw new Error('Failed to fetch expenses');
+	try {
+		const response = await fetch(`${API_BASE_URL}/expenses`);
+		if (!response.ok) {
+			throw new Error('Failed to fetch expenses');
+		}
+
+		// Parse and return the response data
+		const jsonResponse = await response.json();
+		console.log("data in fetchExpenses", jsonResponse);
+
+		// Return the expenses array directly if it’s in `jsonResponse.expenses`
+		return jsonResponse.expenses;
+	} catch (error) {
+		console.error("Error in fetchExpenses:", error);
+		throw error;
 	}
+};
 
-	// Parsing the response to get the data
-	let expenseList = response.json().then((jsonResponse) => {
-    	console.log("data in fetchExpenses", jsonResponse);
-    	return jsonResponse.data;
-	});
-
-	console.log("response in fetchExpenses", expenseList);
-	return expenseList;
-};	
 

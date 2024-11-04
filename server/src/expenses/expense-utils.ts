@@ -35,6 +35,11 @@ export function deleteExpense(req: Request, res: Response, expenses: Expense[]) 
     res.status(200).send({ message: "Expense deleted successfully" });
 }
 
-export function getExpenses(req: Request, res: Response, expenses: Expense[]) {
-    res.status(200).send({ "data": expenses });
+export async function getExpenses(req: Request, res: Response, db: Database) {
+    try {
+        const expenses = await db.all('SELECT * FROM expenses');
+        res.status(200).send({ expenses });
+    } catch (error) {
+        res.status(400).send({ error: `Expenses can't be fetched: ${error}` });
+    }
 }

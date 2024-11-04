@@ -17,12 +17,12 @@ export function createExpenseEndpoints(app: any, db: Database) {
 
 //    });
 
-//    // Get all expenses
-//    app.get("/expenses", (req: Request, res: Response) => {
+   // Get all expenses
+   app.get("/expenses", (req: Request, res: Response) => {
 
-//        getExpenses(req, res, db);
+       getExpenses(req, res, db);
 
-//    });
+   });
 
 }
 
