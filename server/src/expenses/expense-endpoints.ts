@@ -10,12 +10,12 @@ export function createExpenseEndpoints(app: any, db: Database) {
 
    });
 
-//    // Delete an expense
-//    app.delete("/expenses/:id", (req: Request, res: Response) => {
+   // Delete an expense
+   app.delete("/expenses/:id", (req: Request, res: Response) => {
 
-//        deleteExpense(req, res, db);
+       deleteExpense(req, res, db);
 
-//    });
+   });
 
    // Get all expenses
    app.get("/expenses", (req: Request, res: Response) => {

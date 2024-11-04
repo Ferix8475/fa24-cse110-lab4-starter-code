@@ -23,17 +23,31 @@ export async function createExpenseServer(req: Request, res: Response, db: Datab
  }
  
 
-export function deleteExpense(req: Request, res: Response, expenses: Expense[]) {
-    const { id } = req.params;
+ export async function deleteExpense(req: Request, res: Response, db: Database) {
+    try {
+        // Destructuring the `id` from the request body
+        const { id } = req.params as { id: string };
+ 
+        if (!id) {
+            return res.status(400).send({ error: "Missing required 'id' field" });
+        }
 
-    const index = expenses.findIndex((expense) => expense.id === id);
-    if (index === -1) {
-        return res.status(404).send({error: "Expense not found" });
+        // Check if the expense exists
+        const row = await db.get('SELECT 1 FROM expenses WHERE id = ? LIMIT 1;', id);
+        if (!row) {
+            return res.status(404).send({ error: "Expense not found" });
+        }
+ 
+        // Delete the expense if it exists
+        await db.run('DELETE FROM expenses WHERE id = ?;', id);
+        res.status(200).send({ message: "Expense deleted successfully" });
+ 
+    } catch (error) {
+        console.error("Error deleting expense:", error);  // Logs error to server console for debugging
+        return res.status(500).send({ error: "Expense could not be deleted" });
     }
+ }
 
-    expenses.splice(index, 1);
-    res.status(200).send({ message: "Expense deleted successfully" });
-}
 
 export async function getExpenses(req: Request, res: Response, db: Database) {
     try {
